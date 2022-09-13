@@ -1,23 +1,15 @@
 package launch;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import display.Display;
-import display.Display02;
-
-import java.awt.*;
-import java.awt.event.MouseEvent;
 
 public class Gamer {
 
-    private Display02 display;
-
+    private Display display;
 
     public Gamer(){
-        this.display = new Display02();
+        this.display = new Display();
         display.iniciar();
     }
 
-    public void mouseClicked(MouseEvent e){
-        System.out.println("Licado");
-    }
+
 }

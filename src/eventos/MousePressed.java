@@ -1,27 +1,20 @@
 package eventos;
 
-import display.Display;
+import display.DisplayBolinha;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+public class MousePressed implements MouseListener {
+    DisplayBolinha displayBolinha;
 
-
-public class KeyListeners  implements MouseListener {
-    
-    private Canvas dp;
-
-    public KeyListeners(Display dp){
-
-
+    public MousePressed() {
+        this.displayBolinha = new DisplayBolinha();
     }
-
-
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse clicado");
+        this.displayBolinha.criarNovaBolinha(e.getX(), e.getY(), 10 , 10);
     }
 
     @Override
