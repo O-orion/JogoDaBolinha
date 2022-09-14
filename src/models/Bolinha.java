@@ -1,19 +1,38 @@
 package models;
 
+import runnables.RunnableBolinha;
+
+import java.awt.*;
+import java.util.Random;
+
 public class Bolinha {
     private int x = 0;
     private int y = 0;
     private int w  = 10;
     private int h = 10;
+    private Color cor = Color.LIGHT_GRAY;
 
     private boolean larguraTela = false;
     private boolean alturaTela = false;
+
+    private Thread threadPosicaoBolinha;
+    private RunnableBolinha runnablePosicaoBolinha;
+
+    public Bolinha(){ }
 
     public Bolinha(int x, int y, int w, int h){
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.cor = novaCor();
+
+    }
+
+    private void iniciarThread(){
+        this.runnablePosicaoBolinha = new RunnableBolinha(this);
+        this.threadPosicaoBolinha = new Thread(runnablePosicaoBolinha);
+
     }
 
     public void posicaoX(int largura, int escala){
@@ -48,7 +67,6 @@ public class Bolinha {
         }
     }
 
-
     public int getX() {
         return x;
     }
@@ -57,19 +75,29 @@ public class Bolinha {
         return y;
     }
 
-    public int getW() {
-        return w;
+    public Color getColor(){
+        return this.cor;
     }
 
-    public int getH() {
-        return h;
+    private Color novaCor() {
+
+        int nCor =  new Random().nextInt(5);
+
+        switch (nCor) {
+            case 0:
+                return Color.YELLOW;
+            case 1:
+                return Color.RED;
+            case 2:
+                return Color.GREEN;
+            case 3:
+                return Color.BLUE;
+            case 4:
+                return Color.PINK;
+            default:
+                return Color.WHITE;
+        }
+
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 }

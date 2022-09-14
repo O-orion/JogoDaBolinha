@@ -1,20 +1,21 @@
 package eventos;
 
 import display.DisplayBolinha;
+import runnables.RunnableCriaBolinha;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MousePressed implements MouseListener {
-    DisplayBolinha displayBolinha;
 
-    public MousePressed() {
-        this.displayBolinha = new DisplayBolinha();
-    }
+    private RunnableCriaBolinha runnableCriaBolinha;
+    private Thread threadCriarBolinha;
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.displayBolinha.criarNovaBolinha(e.getX(), e.getY(), 10 , 10);
+        runnableCriaBolinha = new RunnableCriaBolinha(e.getX(), e.getY());
+        threadCriarBolinha = new Thread(runnableCriaBolinha);
+        threadCriarBolinha.start();
     }
 
     @Override

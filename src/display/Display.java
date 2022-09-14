@@ -7,7 +7,6 @@ import runnables.RunnableTela;
 import javax.swing.*;
 import java.awt.*;
 
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 import java.util.ArrayList;
@@ -18,11 +17,12 @@ public class Display  {
     // Configuração das libs
     private JFrame frame;
     private Canvas canvas;
+    private DisplayBolinha displayBolinha;
 
     private RunnableTela runTela;
 
     // Variaveis de conf da thread
-    public boolean isRunning = true;
+    static public boolean isRunning = true;
     public Thread thread;
 
     // Variaveis de conf da tela
@@ -30,18 +30,19 @@ public class Display  {
     public static  int altura = 160;
     public static  int escala = 3;
 
-    // Váriavel da bolinha
-    private int x = 0;
-    private int y = 0;
-
     private List<Bolinha> listaDeBolinhas =  new ArrayList<Bolinha>();
 
     // Variaveis dos gráficos
-    Graphics graphics;
+    static Graphics graphics;
 
     public Display(){
+
         this.frame = new JFrame("Jogo da Bolinha"); // adicionando Frame
         this.canvas = new Canvas();
+
+        this.displayBolinha = new DisplayBolinha();
+        displayBolinha.criarNovaBolinha(10,10,10,10);
+
         this.canvas.addMouseListener(new MousePressed());
         this.canvas.setPreferredSize(new Dimension(largura * escala, altura * escala));
 
@@ -52,6 +53,7 @@ public class Display  {
 
     // Criando a interface
     public void initFrame(){
+
         this.frame.add(this.canvas);
         this.frame.pack();
 
@@ -60,8 +62,6 @@ public class Display  {
         this.frame.setLocationRelativeTo(null);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // clico em fecha e fechou
         this.frame.setVisible(true);
-
-        listaDeBolinhas.add(new Bolinha(x, y, 10, 10));
 
     }
 
@@ -80,7 +80,7 @@ public class Display  {
 
     public void render (){
 
-        this.listaDeBolinhas = new DisplayBolinha().bolinhasNaTela();
+        this.listaDeBolinhas = displayBolinha.bolinhasNaTela();
 
         BufferStrategy bs =  this.canvas.getBufferStrategy();
 
@@ -94,26 +94,20 @@ public class Display  {
         graphics = bs.getDrawGraphics();
 
         graphics.fillRect(0,0,largura * escala, altura *escala);
-        graphics.setColor(Color.cyan);
+
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("Arial", Font.BOLD, 20));
+        graphics.drawString(" Alunos: Victor Duarte, Alessandro Barbora, Lucas Viana, Antônio José ",10,30 );
 
         for (Bolinha bolinha : listaDeBolinhas) {
 
-            bolinha.posicaoX(largura, escala);
-            bolinha.posicaoY(altura, escala);
+            graphics.setColor(bolinha.getColor());
             graphics.fillOval(bolinha.getX(), bolinha.getY(), 10, 10);
-        }
+            bolinha.posicaoX(Display.largura, Display.escala);
+            bolinha.posicaoY(Display.altura, Display.escala);
 
+        }
 
         bs.show();
     }
-
-    /* Capturando o click do Mouse
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-        System.out.println(graphics == null ? "Sim" : "Não");
-        System.out.println("Clicado: X = " + e.getX() + " Y: " + e.getY());
-        listaDeBolinhas.add(new Bolinha(e.getX(), e.getY(), 10 , 10));
-    } */
-
 }
