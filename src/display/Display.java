@@ -97,7 +97,7 @@ public class Display  {
 
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
-        graphics.drawString(" Alunos: Victor Duarte, Alessandro Barbora, Lucas Viana, Antônio José ",10,30 );
+        graphics.drawString(" Alunos: Victor Duarte, Alessandro Barbosa, Lucas Viana, Antônio José ",10,30 );
 
         for (Bolinha bolinha : listaDeBolinhas) {
 
